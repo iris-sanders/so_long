@@ -6,7 +6,7 @@
 #    By: irsander <irsander@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/12 13:26:39 by irsander          #+#    #+#              #
-#    Updated: 2024/02/12 22:07:25 by irsander         ###   ########.fr        #
+#    Updated: 2024/02/13 14:30:50 by irsander         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CC		=	cc
 
 #Flags
 CFLAGS	=	-Wall -Wextra -Werror
-MLXFLAG	=	-framework Cocoa -framework OpenGL -framework IOKit -lglfw
+MLXFLAG	=	-ldl -lglfw -pthread -lm
 
 #Target name
 NAME	=	so_long
