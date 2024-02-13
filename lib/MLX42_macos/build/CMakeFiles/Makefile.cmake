@@ -8,10 +8,10 @@ set(CMAKE_DEPENDS_GENERATOR "Unix Makefiles")
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
   "/Users/irissanders/Documents/codam/projects/so_long/lib/MLX42_macos/CMakeLists.txt"
-  "/Users/irissanders/Documents/codam/projects/so_long/lib/MLX42_macos/cmake/Findglfw3.cmake"
   "CMakeFiles/3.28.3/CMakeCCompiler.cmake"
   "CMakeFiles/3.28.3/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.28.3/CMakeSystem.cmake"
+  "/Users/irissanders/Documents/codam/projects/so_long/lib/MLX42_macos/cmake/Findglfw3.cmake"
   "/usr/local/Cellar/cmake/3.28.3/share/cmake/Modules/CMakeCCompiler.cmake.in"
   "/usr/local/Cellar/cmake/3.28.3/share/cmake/Modules/CMakeCCompilerABI.c"
   "/usr/local/Cellar/cmake/3.28.3/share/cmake/Modules/CMakeCInformation.cmake"

@@ -6,7 +6,7 @@
 #    By: irsander <irsander@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/12 13:26:39 by irsander          #+#    #+#              #
-#    Updated: 2024/02/13 19:49:37 by irsander         ###   ########.fr        #
+#    Updated: 2024/02/13 20:01:06 by irsander         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,11 +14,11 @@ UNAME = $(shell uname)
 
 ifeq ($(UNAME), Linux)
     LFLAGS = -ldl -lglfw -pthread -lm
-	MLX_DIR	= lib/MLX42_linux
+	MLX_DIR	= MLX42_linux
 endif
 ifeq ($(UNAME), Darwin)
     LFLAGS = -framework Cocoa -framework OpenGL -framework IOKit -lglfw
-	MLX_DIR = lib/MLX42_macos
+	MLX_DIR = MLX42_macos
 endif
 
 NAME	=	so_long
@@ -48,7 +48,7 @@ $(NAME): $(OBJ) $(LIBFT) $(PRINTF) $(MLX)
 	$(CC) $^ $(INCL) $(CFLAGS) $(LFLAGS) -o $(NAME)
 	
 $(MLX):
-	@cmake $(MLX_DIR) -B $(LIB_DIR)/$(MLX_DIR)/build && make -C $(LIB_DIR)/$(MLX_DIR)/build -j4
+	@cmake $(LIB_DIR)/$(MLX_DIR) -B $(LIB_DIR)/$(MLX_DIR)/build && make -C $(LIB_DIR)/$(MLX_DIR)/build -j4
 
 $(PRINTF):
 	make -C $(LIB_DIR)/ft_printf

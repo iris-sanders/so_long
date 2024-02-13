@@ -1,5 +1,5 @@
-CMakeFiles/mlx42.dir/mlx_frag_shader.c.o: \
-  /Users/irissanders/Documents/codam/projects/so_long/lib/lib/MLX42_macos/build/mlx_frag_shader.c \
+CMakeFiles/mlx42.dir/mlx_vert_shader.c.o: \
+  /Users/irissanders/Documents/codam/projects/so_long/lib/MLX42_macos/build/mlx_vert_shader.c \
   /Users/irissanders/Documents/codam/projects/so_long/lib/MLX42_macos/include/MLX42/MLX42_Int.h \
   /Users/irissanders/Documents/codam/projects/so_long/lib/MLX42_macos/include/MLX42/MLX42.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include/stddef.h \

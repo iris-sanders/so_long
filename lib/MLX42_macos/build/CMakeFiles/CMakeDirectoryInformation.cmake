@@ -3,7 +3,7 @@
 
 # Relative path conversion top directories.
 set(CMAKE_RELATIVE_PATH_TOP_SOURCE "/Users/irissanders/Documents/codam/projects/so_long/lib/MLX42_macos")
-set(CMAKE_RELATIVE_PATH_TOP_BINARY "/Users/irissanders/Documents/codam/projects/so_long/lib/lib/MLX42_macos/build")
+set(CMAKE_RELATIVE_PATH_TOP_BINARY "/Users/irissanders/Documents/codam/projects/so_long/lib/MLX42_macos/build")
 
 # Force unix paths in dependencies.
 set(CMAKE_FORCE_UNIX_PATHS 1)

@@ -10,8 +10,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/irissanders/Documents/codam/projects/so_long/lib/MLX42_macos/lib/glad/glad.c" "CMakeFiles/mlx42.dir/lib/glad/glad.c.o" "gcc" "CMakeFiles/mlx42.dir/lib/glad/glad.c.o.d"
   "/Users/irissanders/Documents/codam/projects/so_long/lib/MLX42_macos/lib/png/lodepng.c" "CMakeFiles/mlx42.dir/lib/png/lodepng.c.o" "gcc" "CMakeFiles/mlx42.dir/lib/png/lodepng.c.o.d"
-  "/Users/irissanders/Documents/codam/projects/so_long/lib/lib/MLX42_macos/build/mlx_frag_shader.c" "CMakeFiles/mlx42.dir/mlx_frag_shader.c.o" "gcc" "CMakeFiles/mlx42.dir/mlx_frag_shader.c.o.d"
-  "/Users/irissanders/Documents/codam/projects/so_long/lib/lib/MLX42_macos/build/mlx_vert_shader.c" "CMakeFiles/mlx42.dir/mlx_vert_shader.c.o" "gcc" "CMakeFiles/mlx42.dir/mlx_vert_shader.c.o.d"
+  "/Users/irissanders/Documents/codam/projects/so_long/lib/MLX42_macos/build/mlx_frag_shader.c" "CMakeFiles/mlx42.dir/mlx_frag_shader.c.o" "gcc" "CMakeFiles/mlx42.dir/mlx_frag_shader.c.o.d"
+  "/Users/irissanders/Documents/codam/projects/so_long/lib/MLX42_macos/build/mlx_vert_shader.c" "CMakeFiles/mlx42.dir/mlx_vert_shader.c.o" "gcc" "CMakeFiles/mlx42.dir/mlx_vert_shader.c.o.d"
   "/Users/irissanders/Documents/codam/projects/so_long/lib/MLX42_macos/src/font/mlx_font.c" "CMakeFiles/mlx42.dir/src/font/mlx_font.c.o" "gcc" "CMakeFiles/mlx42.dir/src/font/mlx_font.c.o.d"
   "/Users/irissanders/Documents/codam/projects/so_long/lib/MLX42_macos/src/mlx_cursor.c" "CMakeFiles/mlx42.dir/src/mlx_cursor.c.o" "gcc" "CMakeFiles/mlx42.dir/src/mlx_cursor.c.o.d"
   "/Users/irissanders/Documents/codam/projects/so_long/lib/MLX42_macos/src/mlx_exit.c" "CMakeFiles/mlx42.dir/src/mlx_exit.c.o" "gcc" "CMakeFiles/mlx42.dir/src/mlx_exit.c.o.d"
