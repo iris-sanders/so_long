@@ -6,7 +6,7 @@
 #    By: irsander <irsander@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/12 13:26:39 by irsander          #+#    #+#              #
-#    Updated: 2024/02/13 20:01:06 by irsander         ###   ########.fr        #
+#    Updated: 2024/02/19 20:08:27 by irsander         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,11 +14,9 @@ UNAME = $(shell uname)
 
 ifeq ($(UNAME), Linux)
     LFLAGS = -ldl -lglfw -pthread -lm
-	MLX_DIR	= MLX42_linux
 endif
 ifeq ($(UNAME), Darwin)
-    LFLAGS = -framework Cocoa -framework OpenGL -framework IOKit -lglfw
-	MLX_DIR = MLX42_macos
+    LFLAGS = -framework Cocoa -framework OpenGL -framework IOKit -lglfw -mmacosx-version-min=13.6
 endif
 
 NAME	=	so_long
@@ -31,16 +29,18 @@ LIB_DIR	=	lib
 OBJ_DIR	=	src/obj
 SRC_DIR	=	src
 
-INCL	=	-I ./incl -I $(LIB_DIR)/libft -I $(LIB_DIR)/ft_printf -I $(LIB_DIR)/$(MLX_DIR)/include
+INCL	=	-I ./incl -I $(LIB_DIR)/libft -I $(LIB_DIR)/ft_printf -I $(LIB_DIR)/MLX42/include/MLX42
 
 FILES	=	main.c \
+			get_next_line.c \
+			get_next_line_utils.c \
 
 SRC		=	$(addprefix $(SRC_DIR)/, $(FILES))	
 OBJ		=	$(addprefix $(OBJ_DIR)/, $(FILES:.c=.o))
 
 LIBFT	=	$(LIB_DIR)/libft/libft.a
 PRINTF	=	$(LIB_DIR)/ft_printf/libftprintf.a
-MLX		=	$(LIB_DIR)/$(MLX_DIR)/build/libmlx42.a
+MLX		=	$(LIB_DIR)/MLX42/build/libmlx42.a
 
 all: $(MLX) $(NAME)
 
@@ -48,7 +48,7 @@ $(NAME): $(OBJ) $(LIBFT) $(PRINTF) $(MLX)
 	$(CC) $^ $(INCL) $(CFLAGS) $(LFLAGS) -o $(NAME)
 	
 $(MLX):
-	@cmake $(LIB_DIR)/$(MLX_DIR) -B $(LIB_DIR)/$(MLX_DIR)/build && make -C $(LIB_DIR)/$(MLX_DIR)/build -j4
+	@cmake $(LIB_DIR)/MLX42 -B $(LIB_DIR)/MLX42/build && make -C $(LIB_DIR)/MLX42/build -j4
 
 $(PRINTF):
 	make -C $(LIB_DIR)/ft_printf
@@ -66,7 +66,7 @@ clean:
 	rm -rf $(OBJ_DIR)
 	$(MAKE) clean -C $(LIB_DIR)/ft_printf
 	$(MAKE) clean -C $(LIB_DIR)/libft
-	rm -rf $(MLX_DIR)/build
+	rm -rf $(LIB_DIR)/MLX42/build
 
 fclean: clean
 	rm -f $(NAME)

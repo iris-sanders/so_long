@@ -1,7 +1,0 @@
-/Users/irissanders/Documents/codam/projects/so_long/lib/MLX42_macos/build/CMakeFiles/mlx42.dir
-/Users/irissanders/Documents/codam/projects/so_long/lib/MLX42_macos/build/CMakeFiles/edit_cache.dir
-/Users/irissanders/Documents/codam/projects/so_long/lib/MLX42_macos/build/CMakeFiles/rebuild_cache.dir
-/Users/irissanders/Documents/codam/projects/so_long/lib/MLX42_macos/build/CMakeFiles/list_install_components.dir
-/Users/irissanders/Documents/codam/projects/so_long/lib/MLX42_macos/build/CMakeFiles/install.dir
-/Users/irissanders/Documents/codam/projects/so_long/lib/MLX42_macos/build/CMakeFiles/install/local.dir
-/Users/irissanders/Documents/codam/projects/so_long/lib/MLX42_macos/build/CMakeFiles/install/strip.dir

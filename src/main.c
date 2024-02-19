@@ -6,11 +6,11 @@
 /*   By: irsander <irsander@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 15:17:37 by irsander          #+#    #+#             */
-/*   Updated: 2024/02/19 16:47:23 by irsander         ###   ########.fr       */
+/*   Updated: 2024/02/19 19:11:44 by irsander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/so_long.h"
+#include "so_long.h"
 
 static mlx_image_t* image;
 

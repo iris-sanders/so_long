@@ -6,7 +6,7 @@
 /*   By: irsander <irsander@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 15:23:31 by irsander          #+#    #+#             */
-/*   Updated: 2024/02/19 16:07:31 by irsander         ###   ########.fr       */
+/*   Updated: 2024/02/19 19:16:29 by irsander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@
 
 # include "ft_printf.h"
 # include "libft.h"
-# include "../lib/MLX42_linux/include/MLX42/MLX42.h"
-# include "../lib/MLX42_macos/include/MLX42/MLX42.h"
+# include "MLX42.h"
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -31,13 +30,13 @@
 # define HEIGHT 512
 
 //get_next_line.c
-char	*cut_line(char *s, char *newline);
-char	*find_line(char *s);
-char	*ft_read(char *s, int fd);
 char	*get_next_line(int fd);
-int		ft_strlen(char *s);
-int		ft_strchr(const char *s, int c);
-char	*ft_strcat(char *s, char *buf);
-void	*ft_free(char **s);
+char	*cut_line_gnl(char *s, char *newline);
+char	*find_line_gnl(char *s);
+char	*ft_read_gnl(char *s, int fd);
+int		ft_strlen_gnl(char *s);
+int		ft_strchr_gnl(const char *s, int c);
+char	*ft_strcat_gnl(char *s, char *buf);
+void	*ft_free_gnl(char **s);
 
 #endif

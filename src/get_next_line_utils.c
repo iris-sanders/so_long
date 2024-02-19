@@ -6,20 +6,20 @@
 /*   By: irsander <irsander@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 16:44:43 by irsander          #+#    #+#             */
-/*   Updated: 2024/02/19 16:46:54 by irsander         ###   ########.fr       */
+/*   Updated: 2024/02/19 19:18:19 by irsander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/so_long.h"
 
-void	*ft_free(char **s)
+void	*ft_free_gnl(char **s)
 {
 	free(*s);
 	*s = NULL;
 	return (NULL);
 }
 
-int	ft_strlen(char *s)
+int	ft_strlen_gnl(char *s)
 {
 	int	i;
 
@@ -29,7 +29,7 @@ int	ft_strlen(char *s)
 	return (i);
 }
 
-int	ft_strchr(const char *s, int c)
+int	ft_strchr_gnl(const char *s, int c)
 {
 	int	i;
 
@@ -41,7 +41,7 @@ int	ft_strchr(const char *s, int c)
 	return (i);
 }
 
-char	*ft_strcat(char *s, char *buf)
+char	*ft_strcat_gnl(char *s, char *buf)
 {
 	int				i;
 	int				j;
@@ -49,9 +49,9 @@ char	*ft_strcat(char *s, char *buf)
 
 	i = 0;
 	j = 0;
-	temp = malloc((ft_strlen(s) + ft_strlen(buf) +1) * sizeof(char));
+	temp = malloc((ft_strlen_gnl(s) + ft_strlen_gnl(buf) +1) * sizeof(char));
 	if (!temp)
-		return (ft_free(&s));
+		return (ft_free_gnl(&s));
 	while (s[i])
 		temp[j++] = s[i++];
 	i = 0;
