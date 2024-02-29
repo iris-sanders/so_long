@@ -6,7 +6,7 @@
 #    By: irsander <irsander@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/12 13:26:39 by irsander          #+#    #+#              #
-#    Updated: 2024/02/19 20:08:27 by irsander         ###   ########.fr        #
+#    Updated: 2024/02/29 14:10:59 by irsander         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ INCL	=	-I ./incl -I $(LIB_DIR)/libft -I $(LIB_DIR)/ft_printf -I $(LIB_DIR)/MLX42
 FILES	=	main.c \
 			get_next_line.c \
 			get_next_line_utils.c \
+			parse_map.c \
 
 SRC		=	$(addprefix $(SRC_DIR)/, $(FILES))	
 OBJ		=	$(addprefix $(OBJ_DIR)/, $(FILES:.c=.o))

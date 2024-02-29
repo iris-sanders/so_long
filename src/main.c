@@ -6,11 +6,19 @@
 /*   By: irsander <irsander@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 15:17:37 by irsander          #+#    #+#             */
-/*   Updated: 2024/02/19 19:11:44 by irsander         ###   ########.fr       */
+/*   Updated: 2024/02/29 19:22:05 by irsander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+static void ft_error_mlx(mlx_t *mlx)
+{
+	if (mlx)
+		mlx_close_window(mlx);
+	fprintf(stderr, "%s", mlx_strerror(mlx_errno));
+	exit(EXIT_FAILURE);
+}
 
 static mlx_image_t* image;
 
@@ -21,7 +29,9 @@ int32_t ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
 
 void ft_randomize(void* param)
 {
-	(void)param;
+	mlx_t *mlx = param;
+	(void)mlx;
+
 	for (uint32_t i = 0; i < image->width; ++i)
 	{
 		for (uint32_t y = 0; y < image->height; ++y)
@@ -50,27 +60,24 @@ void ft_hook(void* param)
 
 // -----------------------------------------------------------------------------
 
-int32_t main(void)
+int32_t main(int argc, char **argv)
 {
-	mlx_t* mlx;
+	mlx_t	*mlx;
+	t_info	map_info;
 
+	if (argc != 2)
+	{
+		ft_putstr_fd("Error: invalid numer of arguments\n", STDERR_FILENO);
+		ft_putstr_fd("<name_of_program> <path_to_map_file>\n", STDERR_FILENO); //What is stder_fileno // why to use it
+		exit(EXIT_FAILURE);
+	}
+	map_init(argv[1], &map_info);
 	if (!(mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
-	{
-		puts(mlx_strerror(mlx_errno));
-		return(EXIT_FAILURE);
-	}
+		ft_error_mlx(mlx);
 	if (!(image = mlx_new_image(mlx, 128, 128)))
-	{
-		mlx_close_window(mlx);
-		puts(mlx_strerror(mlx_errno));
-		return(EXIT_FAILURE);
-	}
+		ft_error_mlx(mlx);
 	if (mlx_image_to_window(mlx, image, 0, 0) == -1)
-	{
-		mlx_close_window(mlx);
-		puts(mlx_strerror(mlx_errno));
-		return(EXIT_FAILURE);
-	}
+		ft_error_mlx(mlx);
 	
 	mlx_loop_hook(mlx, ft_randomize, mlx);
 	mlx_loop_hook(mlx, ft_hook, mlx);
