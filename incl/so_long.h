@@ -6,7 +6,7 @@
 /*   By: irsander <irsander@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 15:23:31 by irsander          #+#    #+#             */
-/*   Updated: 2024/02/29 18:59:30 by irsander         ###   ########.fr       */
+/*   Updated: 2024/03/01 18:43:04 by irsander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 # include <stdbool.h>
 # include <fcntl.h>
 
-# define WIDTH 512
-# define HEIGHT 512
+# define WIDTH 720
+# define HEIGHT 405
 
 typedef struct s_map {
 	char			*line;
@@ -36,13 +36,13 @@ typedef struct s_map {
 } t_map;
 
 typedef struct s_info {
-	int	empty_spaces;
-	int	walls;
-	int collectibles;
-	int exits;
+	int	empty_spaces; //might not need
+	int	walls; //might not need
+	int collectibles; 
+	int exits; 
 	int players;
-	int newlines;
-	int endlines;
+	int newlines; //might not need
+	int endlines; //might not need
 } t_info;
 
 typedef struct player {
@@ -63,8 +63,18 @@ char	*ft_strcat_gnl(char *s, char *buf);
 void	*ft_free_gnl(char **s);
 
 //parse_map.c
-t_map	*open_file(char *file);
-t_map	*map_init(char *file, t_info *map_info);
+t_map	*open_map(char *file);
+t_map	*parse_map(char *file, t_info *map_info);
 void	validate_map(t_map *map_head, t_info *map_info);
+
+//parse_map_utils.c
+t_map	*create_node(char *data);
+void	node_add_back(t_map **head, t_map *new_node);
+size_t	line_strlen(const char *s);
+void	print_list(t_map *head);
+void	ft_error(char *msg);
+
+
+
 
 #endif

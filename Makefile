@@ -6,7 +6,7 @@
 #    By: irsander <irsander@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/12 13:26:39 by irsander          #+#    #+#              #
-#    Updated: 2024/02/29 14:10:59 by irsander         ###   ########.fr        #
+#    Updated: 2024/02/29 23:00:24 by irsander         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ FILES	=	main.c \
 			get_next_line.c \
 			get_next_line_utils.c \
 			parse_map.c \
+			parse_map_utils.c \
 
 SRC		=	$(addprefix $(SRC_DIR)/, $(FILES))	
 OBJ		=	$(addprefix $(OBJ_DIR)/, $(FILES:.c=.o))

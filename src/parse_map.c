@@ -6,7 +6,7 @@
 /*   By: irsander <irsander@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 15:56:41 by irsander          #+#    #+#             */
-/*   Updated: 2024/02/29 19:54:48 by irsander         ###   ########.fr       */
+/*   Updated: 2024/03/01 19:49:24 by irsander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 // E = map exit
 // P = Players starting position
 
+// while node>next niet goed (1 line doesnt work)
+// 
 // MUST contain to be valid: 1 exit, 1 collectible, 1 starting position
 // rectangular map
 // MUST be surrounded by walls, if not return error. ("Error\n") followed by 
@@ -24,40 +26,15 @@
 // check if theres a valid path
 #include "so_long.h"
 
-static void	ft_error(char *msg)
-{
-	ft_putstr_fd("Error: ", STDERR_FILENO);
-	ft_putstr_fd(msg, STDERR_FILENO);
-	ft_putstr_fd("\n", STDERR_FILENO);
-	exit(EXIT_FAILURE);
-}
-static size_t	line_strlen(const char *s)
-{
-	int	i;
 
-	i = 0;
-	while (s[i] && s[i] != '\n')
-		i++;
-	return (i);
-}
-static void	init_map_info(t_info *map_info)
-{
-	map_info->empty_spaces = 0;
-	map_info->walls = 0;
-	map_info->collectibles = 0;
-	map_info->exits = 0;
-	map_info->players = 0;
-	map_info->newlines = 0;
-	map_info->endlines = 0;
-}
-
-static void map_info_counter(t_map *map_head, t_info *map_info)
+static void init_map_info(t_map *map_head, t_info *map_info)
 {
 	int		i;
 	t_map	*node;
 	
 	node = map_head;
-	while (node->next)
+	*map_info = (t_info){0};
+	while (node)
 	{
 		i = 0;
 		while (node->line[i])
@@ -84,72 +61,60 @@ static void map_info_counter(t_map *map_head, t_info *map_info)
 	}
 }
 
-void	validate_map(t_map *map_head, t_info *map_info)
+static int	map_is_rectangular(t_map *map_head)
 {
 	t_map	*node;
-	
+
 	node = map_head;
-	init_map_info(map_info); //map_info = (t_info){0};
-	map_info_counter(map_head, map_info); //maaybe put this in struct map + make libft better by adding gnl and the bonus
-	while (node->next) //make new function out of this part it returns int
+	while (node->next)
 	{
 		if (!(node->length == node->next->length))
 			ft_error("map is not rectangular");
 		node = node->next;	
 	}
-	printf("node is rectangular");
+	return (0);
+}
+
+static int	map_has_walls(t_map *map_head)
+{
+	t_map	*node;
+	t_map	*first_node;
+	t_map	*last_node;
+	int		i;
 	
-	//rectangular >> strlen every node same? return 0 otherwise exit
-	//must be surrounded by walls >> first and last nodes only 1 other nodes first and last 1
-	//count E (exit) must be 1
-	//count C (collectible) must be > 0
-	//count P (player) must be 1
-	// if theres any other character then 0 1 C E P /n /0 en geen /0 +1 map is invalid
-}
-
-void	node_add_back(t_map **head, t_map *new_node)
-{
-	t_map	*node;
-
-	if (*head == NULL)
+	node = map_head;
+	while (node)
 	{
-		*head = new_node;
-		return ;
-	}
-	node = *head;
-	while (node->next)
-		node = node->next;
-	node->next = new_node;
-}
-
-t_map	*create_node(char *data)
-{
-	t_map	*node;
-
-	node = malloc(sizeof(t_map));
-	if (!node)
-		ft_error("failed to create node");
-	node->line = ft_strdup(data);
-	node->length = line_strlen(data);
-	printf("length: %i", node->length);
-	node->next = NULL;
-	return (node);
-}
-
-static void	print_list(t_map *head)
-{
-	t_map	*node;
-
-	node = head;
-	while (node != NULL)
-	{
-		ft_printf("%s", node->line);
+		i = node->length -1;
+		if ((node->line[0] != '1') || (node->line[i] != '1'))
+			ft_error("side of map not surrounded by wall");
 		node = node->next;
 	}
-	ft_printf("\n");
+	first_node = map_head;
+	last_node = map_head;
+	while (last_node->next)
+		last_node = last_node->next;
+	i = 0;
+	while (first_node->line[i] == '1' && last_node->line[i] == '1')
+		i++;
+	if ((first_node->line[i] != '\n') && (first_node->line[i] != '1'))
+		ft_error("Top of map is not surrounded by walls\n");
+	if ((last_node->line[i] != '\n') && (last_node->line[i] != '1') && (last_node->line[i] != '\0'))
+		ft_error("Bottom of map is not surrounded by walls\n");
+	return (0);
+}
+static int	validate_info(t_info *map_info)
+{
+	if (map_info->collectibles < 1)
+		ft_error("no collectibles (C) found in map\n");
+	if (map_info->exits != 1)
+		ft_error("only 1 exit (E) allowed in map\n");
+	if (map_info->players != 1)
+		ft_error("only 1 player (P) allowed in map\n");
+	return (0);
 }
 
-t_map	*open_file(char *file)
+t_map	*open_map(char *file)
 {
 	int		fd;
 	char	*line;
@@ -160,6 +125,8 @@ t_map	*open_file(char *file)
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 		ft_error("unable to open map");
+	if (read(fd, 0, 0) == -1)
+		ft_error("unable to read map");
 	line = get_next_line_gnl(fd);
 	// if (!line)
 	//error free line
@@ -169,18 +136,24 @@ t_map	*open_file(char *file)
 		node_add_back(&head, new_node);
 		line = get_next_line_gnl(fd);
 	}
-	print_list(head);
+	// print_list(head);
 	close(fd);
 	return (head);
 }
 
-t_map	*map_init(char *file, t_info *map_info)
+t_map	*parse_map(char *file, t_info *map_info)
 {
 	t_map	*map_head;
 	
-	map_head = open_file(file);
-	validate_map(map_head, map_info);
-	// if (!validate_map(map_head))
-		//error
+	map_head = open_map(file);
+	if (!map_head)
+		ft_error("failed to open map\n");
+	init_map_info(map_head, map_info);
+	validate_info(map_info); 
+	map_is_rectangular(map_head);
+	map_has_walls(map_head);
+	// map_exit_is_reachable()
+
+	
 	return (map_head);
 }

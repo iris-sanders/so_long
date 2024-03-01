@@ -6,7 +6,7 @@
 /*   By: irsander <irsander@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 15:17:37 by irsander          #+#    #+#             */
-/*   Updated: 2024/02/29 19:22:05 by irsander         ###   ########.fr       */
+/*   Updated: 2024/03/01 14:44:10 by irsander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ int32_t main(int argc, char **argv)
 		ft_putstr_fd("<name_of_program> <path_to_map_file>\n", STDERR_FILENO); //What is stder_fileno // why to use it
 		exit(EXIT_FAILURE);
 	}
-	map_init(argv[1], &map_info);
+	parse_map(argv[1], &map_info);
+	// printf("collectibles: %i\n", map_info.collectibles);
 	if (!(mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
 		ft_error_mlx(mlx);
 	if (!(image = mlx_new_image(mlx, 128, 128)))
