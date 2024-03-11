@@ -6,7 +6,7 @@
 /*   By: irsander <irsander@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 15:23:31 by irsander          #+#    #+#             */
-/*   Updated: 2024/03/01 18:43:04 by irsander         ###   ########.fr       */
+/*   Updated: 2024/03/11 15:29:17 by irsander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,15 @@ typedef struct s_info {
 	int exits; 
 	int players;
 	int newlines; //might not need
-	int endlines; //might not need
+	int endlines;
+	int	x_length;
+	int	y_length;
 } t_info;
 
-typedef struct player {
-	int	steps;
-	int	x;
-	int	y;
-} player;
+typedef struct s_player {
+	int	pos_x;
+	int	pos_y;
+}t_player;
 
 
 //get_next_line.c
@@ -64,7 +65,7 @@ void	*ft_free_gnl(char **s);
 
 //parse_map.c
 t_map	*open_map(char *file);
-t_map	*parse_map(char *file, t_info *map_info);
+t_map	*parse_map(char *file, t_info *map_info, t_player *player_info);
 void	validate_map(t_map *map_head, t_info *map_info);
 
 //parse_map_utils.c

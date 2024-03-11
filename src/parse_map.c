@@ -6,7 +6,7 @@
 /*   By: irsander <irsander@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 15:56:41 by irsander          #+#    #+#             */
-/*   Updated: 2024/03/01 19:49:24 by irsander         ###   ########.fr       */
+/*   Updated: 2024/03/11 16:01:12 by irsander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,10 +140,78 @@ t_map	*open_map(char *file)
 	close(fd);
 	return (head);
 }
+static int	count_nodes(t_map *map_head)
+{
+	t_map	*node;
+	int		count;
+	
+	count = 0;
+	node = map_head;
+	while (node)
+	{
+		node = node->next;
+		count++;
+	}
+	printf("node count: %i", count);
+	return (count);
+	
+}
 
-t_map	*parse_map(char *file, t_info *map_info)
+char	**list_to_2d_array(t_map *map_head, t_info *map_info)
+{
+	t_map	*node;
+	char	**array;
+	int		i;
+	
+	node = map_head;
+	map_info->y_length = count_nodes(map_head);
+	map_info->x_length = ft_strlen(node->line); //map_head->length; doesnt include newline? 
+	array = malloc(map_info->y_length * sizeof(char *));
+	if (!array)
+		ft_error("memory allocation failed");
+	i = 0;
+	while (node)
+	{
+		array[i] = ft_strdup(node->line);
+		// printf("line: %s", array[i]);
+		i++;
+		node = node->next;
+	}
+	return (array);
+}
+
+static void	floodfill()
+{
+	
+}
+
+static void	player_pos(char **array, t_info *map_info, t_player *player_info)
+{
+	int x;
+	int y;
+	
+	y = 0;
+	while (y < map_info->y_length)
+	{
+		x = 0;
+		while (x < map_info->x_length)
+		{
+			if (array[y][x] == 'P')
+			{
+				player_info->pos_y = y;
+				player_info->pos_x = x;
+				break;
+			}
+			x++;
+		}
+		y++;
+	}
+}
+
+t_map	*parse_map(char *file, t_info *map_info, t_player *player_info)
 {
 	t_map	*map_head;
+	char	**array;
 	
 	map_head = open_map(file);
 	if (!map_head)
@@ -151,6 +219,11 @@ t_map	*parse_map(char *file, t_info *map_info)
 	init_map_info(map_head, map_info);
 	validate_info(map_info); 
 	map_is_rectangular(map_head);
+	array = list_to_2d_array(map_head, map_info);
+	player_pos(array, map_info, player_info);
+	printf("pos_x: %i", player_info->pos_x);
+	printf("pos_y: %i", player_info->pos_y);
+	floodfill();
 	map_has_walls(map_head);
 	// map_exit_is_reachable()
 
