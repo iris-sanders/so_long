@@ -6,7 +6,7 @@
 /*   By: irsander <irsander@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 15:56:41 by irsander          #+#    #+#             */
-/*   Updated: 2024/03/11 16:01:12 by irsander         ###   ########.fr       */
+/*   Updated: 2024/03/11 20:54:35 by irsander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,11 +172,12 @@ char	**list_to_2d_array(t_map *map_head, t_info *map_info)
 	i = 0;
 	while (node)
 	{
-		array[i] = ft_strdup(node->line);
-		// printf("line: %s", array[i]);
+		array[i] = node->line;
 		i++;
 		node = node->next;
 	}
+	//free linked list nodes )
+	array[i] = NULL;
 	return (array);
 }
 
