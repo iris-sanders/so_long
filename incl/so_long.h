@@ -6,7 +6,7 @@
 /*   By: irsander <irsander@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 15:23:31 by irsander          #+#    #+#             */
-/*   Updated: 2024/03/11 15:29:17 by irsander         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:08:46 by irsander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <stdlib.h>
 # include <stdbool.h>
 # include <fcntl.h>
+# include <stdbool.h>
 
 # define WIDTH 720
 # define HEIGHT 405

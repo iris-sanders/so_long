@@ -6,7 +6,7 @@
 /*   By: irsander <irsander@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 15:56:41 by irsander          #+#    #+#             */
-/*   Updated: 2024/03/11 20:54:35 by irsander         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:41:19 by irsander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,9 +181,26 @@ char	**list_to_2d_array(t_map *map_head, t_info *map_info)
 	return (array);
 }
 
-static void	floodfill()
+static bool	floodfill(char **array, int x, int y, t_info *map_info)
 {
-	
+	static int	collected_c;
+	static int	exit_is_reachable;
+
+	if (collected_c == map_info->collectibles && exit_is_reachable == 1)
+		return (true);
+	if (array[y][x] == '1')
+		return (false);
+	if (array[y][x] == 'C')
+		collected_c++;
+	if (array[y][x] == 'E')
+		exit_is_reachable++;
+	array[y][x] = '1';
+	if (floodfill(array, x +1, y, map_info) ||
+		floodfill(array, x -1, y, map_info) ||
+		floodfill(array, x, y +1, map_info) ||
+		floodfill(array, x, y -1, map_info))
+		return (true);
+	return (false);
 }
 
 static void	player_pos(char **array, t_info *map_info, t_player *player_info)
@@ -220,12 +237,13 @@ t_map	*parse_map(char *file, t_info *map_info, t_player *player_info)
 	init_map_info(map_head, map_info);
 	validate_info(map_info); 
 	map_is_rectangular(map_head);
+	map_has_walls(map_head);
 	array = list_to_2d_array(map_head, map_info);
 	player_pos(array, map_info, player_info);
-	printf("pos_x: %i", player_info->pos_x);
-	printf("pos_y: %i", player_info->pos_y);
-	floodfill();
-	map_has_walls(map_head);
+	// printf("pos_x: %i", player_info->pos_x);
+	// printf("pos_y: %i", player_info->pos_y);
+	if (floodfill(array, player_info->pos_x, player_info->pos_y, map_info) == false)
+		ft_error("No valid path");
 	// map_exit_is_reachable()
 
 	
