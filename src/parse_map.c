@@ -6,7 +6,7 @@
 /*   By: irsander <irsander@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 15:56:41 by irsander          #+#    #+#             */
-/*   Updated: 2024/03/12 17:41:19 by irsander         ###   ########.fr       */
+/*   Updated: 2024/03/18 16:22:12 by irsander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ static int	map_has_walls(t_map *map_head)
 		ft_error("Bottom of map is not surrounded by walls\n");
 	return (0);
 }
+
 static int	validate_info(t_info *map_info)
 {
 	if (map_info->collectibles < 1)
@@ -159,51 +160,51 @@ static int	count_nodes(t_map *map_head)
 
 char	**list_to_2d_array(t_map *map_head, t_info *map_info)
 {
-	t_map	*node;
+	t_map	*next_node;
 	char	**array;
 	int		i;
-	
-	node = map_head;
+
 	map_info->y_length = count_nodes(map_head);
-	map_info->x_length = ft_strlen(node->line); //map_head->length; doesnt include newline? 
-	array = malloc(map_info->y_length * sizeof(char *));
+	map_info->x_length = ft_strlen(map_head->line); //map_head->length; doesnt include newline? 
+	array = malloc((map_info->y_length + 1) * sizeof(char *));
 	if (!array)
 		ft_error("memory allocation failed");
 	i = 0;
-	while (node)
+	while (map_head)
 	{
-		array[i] = node->line;
+		array[i] = map_head->line;
 		i++;
-		node = node->next;
+		next_node = map_head->next;
+		free(map_head);
+		map_head = next_node;
 	}
-	//free linked list nodes )
 	array[i] = NULL;
 	return (array);
 }
 
-static bool	floodfill(char **array, int x, int y, t_info *map_info)
+static bool	floodfill(char **temp_array, int x, int y, t_info *map_info)
 {
 	static int	collected_c;
 	static int	exit_is_reachable;
 
 	if (collected_c == map_info->collectibles && exit_is_reachable == 1)
 		return (true);
-	if (array[y][x] == '1')
+	if (temp_array[y][x] == '1')
 		return (false);
-	if (array[y][x] == 'C')
+	if (temp_array[y][x] == 'C')
 		collected_c++;
-	if (array[y][x] == 'E')
+	if (temp_array[y][x] == 'E')
 		exit_is_reachable++;
-	array[y][x] = '1';
-	if (floodfill(array, x +1, y, map_info) ||
-		floodfill(array, x -1, y, map_info) ||
-		floodfill(array, x, y +1, map_info) ||
-		floodfill(array, x, y -1, map_info))
+	temp_array[y][x] = '1';
+	if (floodfill(temp_array, x +1, y, map_info) ||
+		floodfill(temp_array, x -1, y, map_info) ||
+		floodfill(temp_array, x, y +1, map_info) ||
+		floodfill(temp_array, x, y -1, map_info))
 		return (true);
 	return (false);
 }
 
-static void	player_pos(char **array, t_info *map_info, t_player *player_info)
+static void	player_pos(char **temp_array, t_info *map_info, t_player *player_info)
 {
 	int x;
 	int y;
@@ -214,7 +215,7 @@ static void	player_pos(char **array, t_info *map_info, t_player *player_info)
 		x = 0;
 		while (x < map_info->x_length)
 		{
-			if (array[y][x] == 'P')
+			if (temp_array[y][x] == 'P')
 			{
 				player_info->pos_y = y;
 				player_info->pos_x = x;
@@ -226,9 +227,48 @@ static void	player_pos(char **array, t_info *map_info, t_player *player_info)
 	}
 }
 
+static char	**copy_array(char **temp_array, t_info *map_info)
+{
+	char	**array;
+	int		y;
+
+	y = map_info->y_length;
+	array = malloc ((y + 1) * sizeof(char *));
+	if (!array)
+		ft_error("failed to allocate memory");
+	array[y] = NULL;
+	y--;
+	while (y > -1)
+	{
+		array[y] = ft_strdup(temp_array[y]);
+		y--;
+	}
+	// y++;
+	// while (y < map_info->y_length)
+	// {
+	// 	printf("%s\n", array[y]);
+	// 	y++;
+	// }
+	return (array);
+}
+
+static void	free_temp_arrays(char **temp_array)
+{
+	int y;
+
+	y = 0;
+	while (temp_array[y] != NULL)
+	{
+		free(temp_array[y]);
+		y++;
+	}
+	free(temp_array);
+}
+
 t_map	*parse_map(char *file, t_info *map_info, t_player *player_info)
 {
 	t_map	*map_head;
+	char	**temp_array;
 	char	**array;
 	
 	map_head = open_map(file);
@@ -238,14 +278,17 @@ t_map	*parse_map(char *file, t_info *map_info, t_player *player_info)
 	validate_info(map_info); 
 	map_is_rectangular(map_head);
 	map_has_walls(map_head);
-	array = list_to_2d_array(map_head, map_info);
-	player_pos(array, map_info, player_info);
+	temp_array = list_to_2d_array(map_head, map_info);
+	array = copy_array(temp_array, map_info);
+	player_pos(temp_array, map_info, player_info);
 	// printf("pos_x: %i", player_info->pos_x);
 	// printf("pos_y: %i", player_info->pos_y);
-	if (floodfill(array, player_info->pos_x, player_info->pos_y, map_info) == false)
+	if (floodfill(temp_array, player_info->pos_x, player_info->pos_y, map_info) == false)
 		ft_error("No valid path");
-	// map_exit_is_reachable()
+	free_temp_arrays(temp_array);
+	// put pos of everything into struct
 
-	
-	return (map_head);
+
+	return (0);
+	// return (array);
 }
