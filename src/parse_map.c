@@ -6,7 +6,7 @@
 /*   By: irsander <irsander@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 15:56:41 by irsander          #+#    #+#             */
-/*   Updated: 2024/03/18 16:22:12 by irsander         ###   ########.fr       */
+/*   Updated: 2024/03/18 20:12:31 by irsander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,7 +265,7 @@ static void	free_temp_arrays(char **temp_array)
 	free(temp_array);
 }
 
-t_map	*parse_map(char *file, t_info *map_info, t_player *player_info)
+char	**parse_map(char *file, t_info *map_info, t_player *player_info)
 {
 	t_map	*map_head;
 	char	**temp_array;
@@ -289,6 +289,6 @@ t_map	*parse_map(char *file, t_info *map_info, t_player *player_info)
 	// put pos of everything into struct
 
 
-	return (0);
+	return (array);
 	// return (array);
 }

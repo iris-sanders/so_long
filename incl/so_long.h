@@ -6,7 +6,7 @@
 /*   By: irsander <irsander@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 15:23:31 by irsander          #+#    #+#             */
-/*   Updated: 2024/03/12 17:08:46 by irsander         ###   ########.fr       */
+/*   Updated: 2024/03/18 20:11:11 by irsander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	*ft_free_gnl(char **s);
 
 //parse_map.c
 t_map	*open_map(char *file);
-t_map	*parse_map(char *file, t_info *map_info, t_player *player_info);
+char	**parse_map(char *file, t_info *map_info, t_player *player_info);
 void	validate_map(t_map *map_head, t_info *map_info);
 
 //parse_map_utils.c
