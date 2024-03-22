@@ -6,7 +6,7 @@
 /*   By: irsander <irsander@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 15:23:31 by irsander          #+#    #+#             */
-/*   Updated: 2024/03/18 20:11:11 by irsander         ###   ########.fr       */
+/*   Updated: 2024/03/22 16:19:50 by irsander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
 # include <fcntl.h>
 # include <stdbool.h>
 
-# define WIDTH 720
-# define HEIGHT 405
+# define WIDTH 1920
+# define HEIGHT 1080
 
 typedef struct s_map {
 	char			*line;
