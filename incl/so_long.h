@@ -6,7 +6,7 @@
 /*   By: irsander <irsander@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 15:23:31 by irsander          #+#    #+#             */
-/*   Updated: 2024/03/23 22:49:20 by irsander         ###   ########.fr       */
+/*   Updated: 2024/03/23 23:37:33 by irsander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,11 @@ typedef struct s_player {
 	int	pos_y;
 }t_player;
 
+typedef struct s_col {
+	int pos_x;
+	int pos_y;
+}t_col;
+
 typedef struct s_info {
 	int	empty_spaces; //might not need
 	int	walls; //might not need
@@ -66,6 +71,7 @@ typedef struct s_info {
 	int	y_length;
 	t_images im;
 	t_player player;
+	t_col col;
 } t_info;
 
 typedef struct s_all {

@@ -6,7 +6,7 @@
 /*   By: irsander <irsander@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 15:17:37 by irsander          #+#    #+#             */
-/*   Updated: 2024/03/23 23:16:15 by irsander         ###   ########.fr       */
+/*   Updated: 2024/03/23 23:58:13 by irsander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,12 @@ static void render_map(char **array, t_info *map_info, mlx_t *mlx)
 			if (array[y][x] == '1')
 				image_to_window(mlx, map_info->im.w_image, tile_size * x, tile_size * y);
 			else if (array[y][x] == 'C')
+			{
+				// map_info->col.pos_y = y;
+				// map_info->col.pos_x = x;
+				// make a linked list to store x and y of every single collectible otherwise it overwrites
 				image_to_window(mlx, map_info->im.c_image, tile_size * x, tile_size * y);
+			}
 			x++;
 		}
 		y++;
@@ -164,7 +169,20 @@ void ft_keyhook(mlx_key_data_t keydata, void* param)
 			(keydata.key == MLX_KEY_A && keydata.action == MLX_PRESS))
 		update_player_pos(all, 1, 0);
 }
-
+static void update_collectibles(t_all *all, t_player *player, t_col *col)
+{
+		// if (player x == collectible x) && (player y == collectible y)
+		// 	background on render background on topf
+		// 	collectibles--
+		if ((player->pos_x == col->pos_x) && (player->pos_y == col->pos_y))
+		{
+			mlx_set_instance_depth(all->map_info->im.b_image->instances, 0);
+			// mlx_image_to_window(all->mlx, all->map_info->im.b_image, tile_size * x, tile_size * y);
+			all->map_info->collectibles--;
+		}
+		
+		
+}
 int32_t main(int argc, char **argv)
 {
 	mlx_t		*mlx;
@@ -185,13 +203,14 @@ int32_t main(int argc, char **argv)
 		ft_error_mlx(mlx);
 	get_png(mlx, &map_info.im);
 	render_map(array, &map_info, mlx);
-	
 	all_info = (t_all){&map_info, mlx, array};
+	mlx_key_hook(mlx, &ft_keyhook, &all_info);
+	update_collectibles(&all_info, &map_info.player, &map_info.col); // not working, implement linked list for pos of collectibles
+	// valid_exit() are collectibles 0
 	// all_info.map_info = &map_info;
 	// all_info.mlx = mlx;
 	// all_info.array = array;
 	mlx_loop_hook(mlx, ft_randomize, &all_info);
-	mlx_key_hook(mlx, &ft_keyhook, &all_info);
 	mlx_loop(mlx);
 	mlx_terminate(mlx);
 	return (EXIT_SUCCESS);
