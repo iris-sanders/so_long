@@ -6,7 +6,7 @@
 /*   By: irsander <irsander@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 15:23:31 by irsander          #+#    #+#             */
-/*   Updated: 2024/03/22 16:19:50 by irsander         ###   ########.fr       */
+/*   Updated: 2024/03/23 22:49:20 by irsander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,32 @@
 # include <fcntl.h>
 # include <stdbool.h>
 
-# define WIDTH 1920
-# define HEIGHT 1080
+# define WIDTH 1000
+# define HEIGHT 1000
 
 typedef struct s_map {
 	char			*line;
 	int				length;
 	struct s_map	*next;
 } t_map;
+
+typedef struct s_images {
+	mlx_texture_t	*p_texture;
+	mlx_image_t		*p_image;
+	mlx_texture_t	*b_texture;
+	mlx_image_t		*b_image;
+	mlx_texture_t	*w_texture;
+	mlx_image_t		*w_image;
+	mlx_texture_t	*c_texture;
+	mlx_image_t		*c_image;
+	int				tile_size;
+	
+} t_images;
+
+typedef struct s_player {
+	int	pos_x;
+	int	pos_y;
+}t_player;
 
 typedef struct s_info {
 	int	empty_spaces; //might not need
@@ -46,12 +64,15 @@ typedef struct s_info {
 	int endlines;
 	int	x_length;
 	int	y_length;
+	t_images im;
+	t_player player;
 } t_info;
 
-typedef struct s_player {
-	int	pos_x;
-	int	pos_y;
-}t_player;
+typedef struct s_all {
+	t_info	*map_info;
+	mlx_t	*mlx;
+	char	**array;
+} t_all;
 
 
 //get_next_line.c
@@ -66,7 +87,7 @@ void	*ft_free_gnl(char **s);
 
 //parse_map.c
 t_map	*open_map(char *file);
-char	**parse_map(char *file, t_info *map_info, t_player *player_info);
+char	**parse_map(char *file, t_info *map_info);
 void	validate_map(t_map *map_head, t_info *map_info);
 
 //parse_map_utils.c
@@ -75,6 +96,8 @@ void	node_add_back(t_map **head, t_map *new_node);
 size_t	line_strlen(const char *s);
 void	print_list(t_map *head);
 void	ft_error(char *msg);
+
+void 	ft_error_mlx(mlx_t *mlx);
 
 
 

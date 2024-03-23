@@ -6,7 +6,7 @@
 /*   By: irsander <irsander@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 22:52:18 by irsander          #+#    #+#             */
-/*   Updated: 2024/03/11 15:45:32 by irsander         ###   ########.fr       */
+/*   Updated: 2024/03/23 18:19:05 by irsander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ t_map	*create_node(char *data)
 		ft_error("failed to create node");
 	node->line = ft_strdup(data);
 	node->length = line_strlen(data); //add the collectib les and stuff here and make 1 validate function
+	if (node->line[node->length] == '\n')
+		node->line[node->length] = '\0';
 	// printf("length: %i", node->length);
 	node->next = NULL;
 	return (node);

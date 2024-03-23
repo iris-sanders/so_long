@@ -6,7 +6,7 @@
 /*   By: irsander <irsander@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 15:56:41 by irsander          #+#    #+#             */
-/*   Updated: 2024/03/18 20:12:31 by irsander         ###   ########.fr       */
+/*   Updated: 2024/03/23 19:27:40 by irsander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,9 @@ static int	map_has_walls(t_map *map_head)
 	i = 0;
 	while (first_node->line[i] == '1' && last_node->line[i] == '1')
 		i++;
-	if ((first_node->line[i] != '\n') && (first_node->line[i] != '1'))
+	if ((first_node->line[i] != '\0') && (first_node->line[i] != '1'))
 		ft_error("Top of map is not surrounded by walls\n");
-	if ((last_node->line[i] != '\n') && (last_node->line[i] != '1') && (last_node->line[i] != '\0'))
+	if ((last_node->line[i] != '\0') && (last_node->line[i] != '1') && (last_node->line[i] != '\0'))
 		ft_error("Bottom of map is not surrounded by walls\n");
 	return (0);
 }
@@ -137,7 +137,6 @@ t_map	*open_map(char *file)
 		node_add_back(&head, new_node);
 		line = get_next_line_gnl(fd);
 	}
-	// print_list(head);
 	close(fd);
 	return (head);
 }
@@ -265,7 +264,7 @@ static void	free_temp_arrays(char **temp_array)
 	free(temp_array);
 }
 
-char	**parse_map(char *file, t_info *map_info, t_player *player_info)
+char	**parse_map(char *file, t_info *map_info)
 {
 	t_map	*map_head;
 	char	**temp_array;
@@ -280,10 +279,10 @@ char	**parse_map(char *file, t_info *map_info, t_player *player_info)
 	map_has_walls(map_head);
 	temp_array = list_to_2d_array(map_head, map_info);
 	array = copy_array(temp_array, map_info);
-	player_pos(temp_array, map_info, player_info);
-	// printf("pos_x: %i", player_info->pos_x);
-	// printf("pos_y: %i", player_info->pos_y);
-	if (floodfill(temp_array, player_info->pos_x, player_info->pos_y, map_info) == false)
+	player_pos(temp_array, map_info, &map_info->player);
+	// printf("pos_x: %i", map_info->player->pos_x);
+	// printf("pos_y: %i", map_info->player->pos_y);
+	if (floodfill(temp_array, map_info->player.pos_x, map_info->player.pos_y, map_info) == false)
 		ft_error("No valid path");
 	free_temp_arrays(temp_array);
 	// put pos of everything into struct
