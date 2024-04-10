@@ -6,7 +6,7 @@
 #    By: irsander <irsander@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/12 13:26:39 by irsander          #+#    #+#              #
-#    Updated: 2024/02/29 23:00:24 by irsander         ###   ########.fr        #
+#    Updated: 2024/04/10 19:02:48 by irsander         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,14 +16,14 @@ ifeq ($(UNAME), Linux)
     LFLAGS = -ldl -lglfw -pthread -lm
 endif
 ifeq ($(UNAME), Darwin)
-    LFLAGS = -framework Cocoa -framework OpenGL -framework IOKit -lglfw -mmacosx-version-min=13.6
+    LFLAGS = -framework Cocoa -framework OpenGL -framework IOKit -lglfw -mmacosx-version-min=13.6 
 endif
 
 NAME	=	so_long
 
 CC		=	cc
 
-CFLAGS	=	-Wall -Wextra -Werror
+CFLAGS	=	-Wall -Wextra -Werror -fsanitize=address -g
 
 LIB_DIR	=	lib
 OBJ_DIR	=	src/obj

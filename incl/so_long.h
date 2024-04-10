@@ -6,7 +6,7 @@
 /*   By: irsander <irsander@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 15:23:31 by irsander          #+#    #+#             */
-/*   Updated: 2024/03/23 23:37:33 by irsander         ###   ########.fr       */
+/*   Updated: 2024/04/10 19:26:33 by irsander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ typedef struct s_images {
 	mlx_image_t		*w_image;
 	mlx_texture_t	*c_texture;
 	mlx_image_t		*c_image;
+	mlx_texture_t	*e_texture;
+	mlx_image_t		*e_image;
 	int				tile_size;
 	
 } t_images;

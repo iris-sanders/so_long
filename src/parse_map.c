@@ -6,7 +6,7 @@
 /*   By: irsander <irsander@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 15:56:41 by irsander          #+#    #+#             */
-/*   Updated: 2024/03/23 19:27:40 by irsander         ###   ########.fr       */
+/*   Updated: 2024/04/10 20:06:27 by irsander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ t_map	*open_map(char *file)
 
 	head = NULL;
 	fd = open(file, O_RDONLY);
+	printf("%i", fd);
 	if (fd == -1)
 		ft_error("unable to open map");
 	if (read(fd, 0, 0) == -1)
@@ -203,7 +204,7 @@ static bool	floodfill(char **temp_array, int x, int y, t_info *map_info)
 	return (false);
 }
 
-static void	player_pos(char **temp_array, t_info *map_info, t_player *player_info)
+static void	player_pos(char **temp_array, t_info *map_info)
 {
 	int x;
 	int y;
@@ -216,8 +217,8 @@ static void	player_pos(char **temp_array, t_info *map_info, t_player *player_inf
 		{
 			if (temp_array[y][x] == 'P')
 			{
-				player_info->pos_y = y;
-				player_info->pos_x = x;
+				map_info->player.pos_y = y;
+				map_info->player.pos_x = x;
 				break;
 			}
 			x++;
@@ -279,7 +280,7 @@ char	**parse_map(char *file, t_info *map_info)
 	map_has_walls(map_head);
 	temp_array = list_to_2d_array(map_head, map_info);
 	array = copy_array(temp_array, map_info);
-	player_pos(temp_array, map_info, &map_info->player);
+	player_pos(temp_array, map_info);
 	// printf("pos_x: %i", map_info->player->pos_x);
 	// printf("pos_y: %i", map_info->player->pos_y);
 	if (floodfill(temp_array, map_info->player.pos_x, map_info->player.pos_y, map_info) == false)
