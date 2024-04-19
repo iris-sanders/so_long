@@ -6,11 +6,11 @@
 /*   By: irsander <irsander@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 16:44:43 by irsander          #+#    #+#             */
-/*   Updated: 2024/02/29 15:43:35 by irsander         ###   ########.fr       */
+/*   Updated: 2024/04/19 17:43:40 by irsander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/so_long.h"
+#include "so_long.h"
 
 void	*ft_free_gnl(char **s)
 {

@@ -6,7 +6,7 @@
 #    By: irsander <irsander@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/12 13:26:39 by irsander          #+#    #+#              #
-#    Updated: 2024/04/19 11:57:27 by irsander         ###   ########.fr        #
+#    Updated: 2024/04/19 20:01:15 by irsander         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ NAME	=	so_long
 
 CC		=	cc
 
-CFLAGS	=	#-Wall -Wextra -Werror -fsanitize=address -g
+CFLAGS	=	-Wall -Wextra -Werror -fsanitize=address -g
 
 LIB_DIR	=	lib
 OBJ_DIR	=	src/obj
@@ -35,7 +35,14 @@ FILES	=	main.c \
 			get_next_line.c \
 			get_next_line_utils.c \
 			parse_map.c \
-			parse_map_utils.c \
+			utils.c \
+			game.c \
+			rendering.c \
+			images.c \
+			map_init.c \
+			validate_map.c \
+			linked_list.c \
+			validate_path.c \
 
 SRC		=	$(addprefix $(SRC_DIR)/, $(FILES))	
 OBJ		=	$(addprefix $(OBJ_DIR)/, $(FILES:.c=.o))

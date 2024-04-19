@@ -6,11 +6,11 @@
 /*   By: irsander <irsander@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 16:43:35 by irsander          #+#    #+#             */
-/*   Updated: 2024/04/19 12:08:22 by irsander         ###   ########.fr       */
+/*   Updated: 2024/04/19 17:43:49 by irsander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/so_long.h"
+#include "so_long.h"
 
 char	*cut_line_gnl(char *s, char *newline)
 {

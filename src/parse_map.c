@@ -6,105 +6,11 @@
 /*   By: irsander <irsander@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 15:56:41 by irsander          #+#    #+#             */
-/*   Updated: 2024/04/19 15:18:41 by irsander         ###   ########.fr       */
+/*   Updated: 2024/04/19 19:34:58 by irsander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-
-void	function(t_info *map_info, char ch)
-{
-	if (ch == '0')
-		map_info->empty_spaces += 1;
-	else if (ch == '1')
-		map_info->walls += 1;
-	else if (ch == 'C')
-		map_info->collectibles += 1;
-	else if (ch == 'E')
-		map_info->exits += 1;
-	else if (ch == 'P')
-		map_info->players += 1;
-	else if (ch == '\n')
-		map_info->newlines += 1;
-	else if (ch == '\0')
-		map_info->endlines += 1;
-	else
-		ft_error("unvalid map, allowed characters: 0,1,C,E,P");
-}
-
-static void init_map_info(t_map *map_head, t_info *map_info)
-{
-	int		i;
-	t_map	*node;
-	
-	node = map_head;
-	*map_info = (t_info){0};
-	while (node)
-	{
-		i = 0;
-		while (node->line[i])
-		{
-			function(map_info, node->line[i]);
-			i++;
-		}
-		node = node->next;
-	}
-}
-
-static int	map_is_rectangular(t_map *map_head)
-{
-	t_map	*node;
-
-	node = map_head;
-	while (node->next)
-	{
-		if (!(node->length == node->next->length))
-			ft_error("map is not rectangular");
-		node = node->next;	
-	}
-	return (0);
-}
-
-static int	map_has_walls(t_map *map_head)
-{
-	t_map	*node;
-	t_map	*first_node;
-	t_map	*last_node;
-	int		i;
-	
-	node = map_head;
-	while (node)
-	{
-		i = node->length -1;
-		if ((node->line[0] != '1') || (node->line[i] != '1'))
-			ft_error("side of map not surrounded by wall");
-		node = node->next;
-	}
-	first_node = map_head;
-	last_node = map_head;
-	while (last_node->next)
-		last_node = last_node->next;
-	i = 0;
-	while (first_node->line[i] == '1' && last_node->line[i] == '1')
-		i++;
-	if ((first_node->line[i] != '\0') && (first_node->line[i] != '1'))
-		ft_error("Top of map is not surrounded by walls\n");
-	if ((last_node->line[i] != '\0') && (last_node->line[i] != '1') && (last_node->line[i] != '\0'))
-		ft_error("Bottom of map is not surrounded by walls\n");
-	return (0);
-}
-
-static int	validate_info(t_info *map_info)
-{
-	if (map_info->collectibles < 1)
-		ft_error("no collectibles (C) found in map\n");
-	if (map_info->exits != 1)
-		ft_error("only 1 exit (E) allowed in map\n");
-	if (map_info->players != 1)
-		ft_error("only 1 player (P) allowed in map\n");
-	return (0);
-}
 
 t_map	*open_map(char *file)
 {
@@ -133,155 +39,18 @@ t_map	*open_map(char *file)
 	close(fd);
 	return (head);
 }
-static int	count_nodes(t_map *map_head)
-{
-	t_map	*node;
-	int		count;
-	
-	count = 0;
-	node = map_head;
-	while (node)
-	{
-		node = node->next;
-		count++;
-	}
-	return (count);
-	
-}
-
-char	**list_to_2d_array(t_map *map_head, t_info *map_info)
-{
-	t_map	*next_node;
-	char	**array;
-	int		i;
-
-	map_info->y_length = count_nodes(map_head);
-	map_info->x_length = ft_strlen(map_head->line);
-	array = malloc((map_info->y_length + 1) * sizeof(char *));
-	if (!array)
-		ft_error("memory allocation failed");
-	i = 0;
-	while (map_head)
-	{
-		array[i] = map_head->line;
-		i++;
-		next_node = map_head->next;
-		free(map_head);
-		map_head = next_node;
-	}
-	array[i] = NULL;
-	return (array);
-}
-
-static bool	floodfill(char **temp_array, int x, int y, t_info *map_info)
-{
-	static int	collected_c;
-	static int	exit_is_reachable;
-
-	if (collected_c == map_info->collectibles && exit_is_reachable == 1)
-		return (true);
-	if (temp_array[y][x] == '1')
-		return (false);
-	if (temp_array[y][x] == 'C')
-		collected_c++;
-	if (temp_array[y][x] == 'E')
-		exit_is_reachable++;
-	temp_array[y][x] = '1';
-	if (floodfill(temp_array, x +1, y, map_info) ||
-		floodfill(temp_array, x -1, y, map_info) ||
-		floodfill(temp_array, x, y +1, map_info) ||
-		floodfill(temp_array, x, y -1, map_info))
-		return (true);
-	return (false);
-}
-
-static void	player_pos(char **temp_array, t_info *map_info)
-{
-	int x;
-	int y;
-	
-	y = 0;
-	while (y < map_info->y_length)
-	{
-		x = 0;
-		while (x < map_info->x_length)
-		{
-			if (temp_array[y][x] == 'P')
-			{
-				map_info->player.pos_y = y;
-				map_info->player.pos_x = x;
-				break;
-			}
-			x++;
-		}
-		y++;
-	}
-}
-
-static char	**copy_array(char **temp_array, t_info *map_info)
-{
-	char	**array;
-	int		y;
-	int i;
-	
-	y = map_info->y_length;
-	array = malloc((y + 1) * sizeof(char *));
-	if (!array)
-		ft_error("failed to allocate memory");
-	array[y] = NULL;
-	y--;
-	while (y >= 0)
-	{
-		array[y] = ft_strdup(temp_array[y]);
-		if (!array[y])
-		{
-			i = y + 1;
-			while (i <= map_info->y_length)
-			{
-				free(array[i]);
-				i++;
-			}
-			free(array);
-			ft_error("failed to allocate memory for string copy");
-			return NULL;
-		}
-		y--;
-	}
-	array[map_info->y_length] = NULL;
-	return (array);
-}
-
-void	free_2d_array(char **array)
-{
-	int y;
-
-	y = 0;
-	while (array[y] != NULL)
-	{
-		free(array[y]);
-		y++;
-	}
-	free(array);
-}
 
 char	**parse_map(char *file, t_info *map_info)
 {
 	t_map	*map_head;
-	char	**temp_array;
 	char	**array;
-	
+
+	array = NULL;
 	map_head = open_map(file);
 	if (!map_head)
 		ft_error("failed to open map\n");
 	init_map_info(map_head, map_info);
-	validate_info(map_info); 
-	map_is_rectangular(map_head);
-	map_has_walls(map_head);
-	temp_array = list_to_2d_array(map_head, map_info);
-	array = copy_array(temp_array, map_info);
-	player_pos(temp_array, map_info);
-	if (floodfill(temp_array, map_info->player.pos_x, map_info->player.pos_y, map_info) == false)
-		ft_error("No valid path");
-	free_2d_array(temp_array);
+	map_is_valid(map_info, map_head);
+	array = path_is_valid(map_head, map_info, array);
 	return (array);
 }
