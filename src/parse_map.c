@@ -6,24 +6,10 @@
 /*   By: irsander <irsander@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 15:56:41 by irsander          #+#    #+#             */
-/*   Updated: 2024/04/10 20:06:27 by irsander         ###   ########.fr       */
+/*   Updated: 2024/04/19 13:02:18 by irsander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// map has 3 components: walls, collectibles, free space
-// 0 = empty space
-// 1 = wall
-// C = collectible
-// E = map exit
-// P = Players starting position
-
-// while node>next niet goed (1 line doesnt work)
-// 
-// MUST contain to be valid: 1 exit, 1 collectible, 1 starting position
-// rectangular map
-// MUST be surrounded by walls, if not return error. ("Error\n") followed by 
-// explicit error message
-// check if theres a valid path
 #include "so_long.h"
 
 
@@ -124,14 +110,14 @@ t_map	*open_map(char *file)
 
 	head = NULL;
 	fd = open(file, O_RDONLY);
-	printf("%i", fd);
+	// printf("%i", fd);
 	if (fd == -1)
 		ft_error("unable to open map");
 	if (read(fd, 0, 0) == -1)
 		ft_error("unable to read map");
 	line = get_next_line_gnl(fd);
-	// if (!line)
-	//error free line
+	if (!line)
+		ft_error("couldn't get the next line\n");
 	while (line != NULL)
 	{
 		new_node = create_node(line);
@@ -153,7 +139,6 @@ static int	count_nodes(t_map *map_head)
 		node = node->next;
 		count++;
 	}
-	printf("node count: %i", count);
 	return (count);
 	
 }
@@ -165,7 +150,7 @@ char	**list_to_2d_array(t_map *map_head, t_info *map_info)
 	int		i;
 
 	map_info->y_length = count_nodes(map_head);
-	map_info->x_length = ft_strlen(map_head->line); //map_head->length; doesnt include newline? 
+	map_info->x_length = ft_strlen(map_head->line);
 	array = malloc((map_info->y_length + 1) * sizeof(char *));
 	if (!array)
 		ft_error("memory allocation failed");
@@ -231,38 +216,46 @@ static char	**copy_array(char **temp_array, t_info *map_info)
 {
 	char	**array;
 	int		y;
-
+	int i;
+	
 	y = map_info->y_length;
-	array = malloc ((y + 1) * sizeof(char *));
+	array = malloc((y + 1) * sizeof(char *));
 	if (!array)
 		ft_error("failed to allocate memory");
 	array[y] = NULL;
 	y--;
-	while (y > -1)
+	while (y >= 0)
 	{
 		array[y] = ft_strdup(temp_array[y]);
+		if (!array[y])
+		{
+			i = y + 1;
+			while (i <= map_info->y_length)
+			{
+				free(array[i]);
+				i++;
+			}
+			free(array);
+			ft_error("failed to allocate memory for string copy");
+			return NULL;
+		}
 		y--;
 	}
-	// y++;
-	// while (y < map_info->y_length)
-	// {
-	// 	printf("%s\n", array[y]);
-	// 	y++;
-	// }
+	array[map_info->y_length] = NULL;
 	return (array);
 }
 
-static void	free_temp_arrays(char **temp_array)
+void	free_2d_array(char **array)
 {
 	int y;
 
 	y = 0;
-	while (temp_array[y] != NULL)
+	while (array[y] != NULL)
 	{
-		free(temp_array[y]);
+		free(array[y]);
 		y++;
 	}
-	free(temp_array);
+	free(array);
 }
 
 char	**parse_map(char *file, t_info *map_info)
@@ -281,14 +274,8 @@ char	**parse_map(char *file, t_info *map_info)
 	temp_array = list_to_2d_array(map_head, map_info);
 	array = copy_array(temp_array, map_info);
 	player_pos(temp_array, map_info);
-	// printf("pos_x: %i", map_info->player->pos_x);
-	// printf("pos_y: %i", map_info->player->pos_y);
 	if (floodfill(temp_array, map_info->player.pos_x, map_info->player.pos_y, map_info) == false)
 		ft_error("No valid path");
-	free_temp_arrays(temp_array);
-	// put pos of everything into struct
-
-
+	free_2d_array(temp_array);
 	return (array);
-	// return (array);
 }

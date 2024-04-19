@@ -6,7 +6,7 @@
 /*   By: irsander <irsander@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 22:52:18 by irsander          #+#    #+#             */
-/*   Updated: 2024/03/23 18:19:05 by irsander         ###   ########.fr       */
+/*   Updated: 2024/04/19 11:08:10 by irsander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	print_list(t_map *head)
 		ft_printf("%s", node->line);
 		node = node->next;
 	}
-	ft_printf("\n");
+	// ft_printf("\n");
 }
 
 void	ft_error(char *msg)

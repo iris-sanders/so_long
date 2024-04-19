@@ -6,7 +6,7 @@
 /*   By: irsander <irsander@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 15:23:31 by irsander          #+#    #+#             */
-/*   Updated: 2024/04/10 19:26:33 by irsander         ###   ########.fr       */
+/*   Updated: 2024/04/19 12:50:55 by irsander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ void	print_list(t_map *head);
 void	ft_error(char *msg);
 
 void 	ft_error_mlx(mlx_t *mlx);
+void	free_2d_array(char **array);
 
 
 

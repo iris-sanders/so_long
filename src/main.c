@@ -6,7 +6,7 @@
 /*   By: irsander <irsander@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 15:17:37 by irsander          #+#    #+#             */
-/*   Updated: 2024/04/10 22:41:09 by irsander         ###   ########.fr       */
+/*   Updated: 2024/04/19 12:51:08 by irsander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,8 @@ void update_player_pos(t_all *all, int x_move, int y_move)
 {
 	int new_x;
 	int new_y;
-	int tilesize;
+	int tilesize;	
+	static int number_of_movements = 0;
 
 	new_x = all->map_info->player.pos_x + x_move;
 	new_y = all->map_info->player.pos_y + y_move;
@@ -167,16 +168,20 @@ void update_player_pos(t_all *all, int x_move, int y_move)
 	}
 	if (all->map_info->collectibles == 0)
 		all->map_info->im.e_image->instances[0].enabled = true;	
+	if (all->array[new_y][new_x] == 'E' && all->map_info->collectibles == 0)
+		mlx_close_window(all->mlx);
 	all->map_info->player.pos_x += x_move;
 	all->map_info->player.pos_y += y_move;
 	all->map_info->im.p_image->instances[0].x += x_move * tilesize;
 	all->map_info->im.p_image->instances[0].y += y_move * tilesize;
+	ft_printf("\rNumber of movements: %i", number_of_movements++);
 }
 
 void ft_keyhook(mlx_key_data_t keydata, void* param)
 {
-	t_all* all = param;
-
+	t_all* all;
+	
+	all = param;
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 		mlx_close_window(all->mlx);
 	else if ((keydata.key == MLX_KEY_UP && keydata.action == MLX_PRESS) ||\
@@ -203,7 +208,7 @@ int32_t main(int argc, char **argv)
 	if (argc != 2)
 	{
 		ft_putstr_fd("Error: invalid numer of arguments\n", STDERR_FILENO);
-		ft_putstr_fd("<name_of_program> <path_to_map_file>\n", STDERR_FILENO); //What is stder_fileno // why to use it
+		ft_putstr_fd("<name_of_program> <path_to_map_file>\n", STDERR_FILENO);
 		exit(EXIT_FAILURE);
 	}
 	array = parse_map(argv[1], &map_info);
@@ -215,14 +220,10 @@ int32_t main(int argc, char **argv)
 	render_map(array, &map_info, mlx);
 	all_info = (t_all){&map_info, mlx, array};
 	mlx_key_hook(mlx, &ft_keyhook, &all_info);
-	// update_collectibles(&all_info, &map_info.player, &map_info.col); // not working, implement linked list for pos of collectibles
-	// valid_exit() are collectibles 0
-	// all_info.map_info = &map_info;
-	// all_info.mlx = mlx;
-	// all_info.array = array;
-	// mlx_loop_hook(mlx, ft_randomize, &all_info);
 	mlx_loop(mlx);
+	ft_printf("\n");
 	mlx_terminate(mlx);
+	free_2d_array(array);
 	return (EXIT_SUCCESS);
 }
 
