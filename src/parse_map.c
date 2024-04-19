@@ -6,12 +6,32 @@
 /*   By: irsander <irsander@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 15:56:41 by irsander          #+#    #+#             */
-/*   Updated: 2024/04/19 13:02:18 by irsander         ###   ########.fr       */
+/*   Updated: 2024/04/19 15:18:41 by irsander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+
+void	function(t_info *map_info, char ch)
+{
+	if (ch == '0')
+		map_info->empty_spaces += 1;
+	else if (ch == '1')
+		map_info->walls += 1;
+	else if (ch == 'C')
+		map_info->collectibles += 1;
+	else if (ch == 'E')
+		map_info->exits += 1;
+	else if (ch == 'P')
+		map_info->players += 1;
+	else if (ch == '\n')
+		map_info->newlines += 1;
+	else if (ch == '\0')
+		map_info->endlines += 1;
+	else
+		ft_error("unvalid map, allowed characters: 0,1,C,E,P");
+}
 
 static void init_map_info(t_map *map_head, t_info *map_info)
 {
@@ -25,22 +45,7 @@ static void init_map_info(t_map *map_head, t_info *map_info)
 		i = 0;
 		while (node->line[i])
 		{
-			if (node->line[i] == '0')
-				map_info->empty_spaces += 1;
-			else if (node->line[i] == '1')
-				map_info->walls += 1;
-			else if (node->line[i] == 'C')
-				map_info->collectibles += 1;
-			else if (node->line[i] == 'E')
-				map_info->exits += 1;
-			else if (node->line[i] == 'P')
-				map_info->players += 1;
-			else if (node->line[i] == '\n')
-				map_info->newlines += 1;
-			else if (node->line[i] == '\0')
-				map_info->endlines += 1;
-			else
-				ft_error("unvalid map, allowed characters: 0,1,C,E,P");
+			function(map_info, node->line[i]);
 			i++;
 		}
 		node = node->next;
@@ -121,6 +126,7 @@ t_map	*open_map(char *file)
 	while (line != NULL)
 	{
 		new_node = create_node(line);
+		free(line);
 		node_add_back(&head, new_node);
 		line = get_next_line_gnl(fd);
 	}
