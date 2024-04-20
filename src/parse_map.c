@@ -6,7 +6,7 @@
 /*   By: irsander <irsander@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 15:56:41 by irsander          #+#    #+#             */
-/*   Updated: 2024/04/19 19:34:58 by irsander         ###   ########.fr       */
+/*   Updated: 2024/04/19 20:27:59 by irsander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ t_map	*open_map(char *file)
 
 	head = NULL;
 	fd = open(file, O_RDONLY);
-	// printf("%i", fd);
 	if (fd == -1)
 		ft_error("unable to open map");
 	if (read(fd, 0, 0) == -1)

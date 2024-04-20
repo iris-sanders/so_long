@@ -6,7 +6,7 @@
 /*   By: irsander <irsander@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 18:26:31 by irsander          #+#    #+#             */
-/*   Updated: 2024/04/19 19:29:26 by irsander         ###   ########.fr       */
+/*   Updated: 2024/04/19 20:34:35 by irsander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	count_nodes(t_map *map_head)
 {
 	t_map	*node;
 	int		count;
-	
+
 	count = 0;
 	node = map_head;
 	while (node)

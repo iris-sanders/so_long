@@ -6,7 +6,7 @@
 /*   By: irsander <irsander@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 22:52:18 by irsander          #+#    #+#             */
-/*   Updated: 2024/04/19 19:42:05 by irsander         ###   ########.fr       */
+/*   Updated: 2024/04/20 17:33:27 by irsander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ size_t	line_strlen(const char *s)
 
 void	free_2d_array(char **array)
 {
-	int y;
+	int	y;
 
 	y = 0;
 	while (array[y] != NULL)
@@ -43,7 +43,7 @@ void	ft_error(char *msg)
 	exit(EXIT_FAILURE);
 }
 
-void cleanup(t_all *all_info, char **array)
+void	cleanup(t_all *all_info, char **array)
 {
 	mlx_delete_texture(all_info->imgs->p_texture);
 	mlx_delete_texture(all_info->imgs->b_texture);
@@ -59,12 +59,10 @@ void cleanup(t_all *all_info, char **array)
 	mlx_terminate(all_info->mlx);
 }
 
-void ft_error_mlx(mlx_t *mlx)
+void	ft_error_mlx(mlx_t *mlx)
 {
 	if (mlx)
 		mlx_close_window(mlx);
 	fprintf(stderr, "%s", mlx_strerror(mlx_errno));
 	exit(EXIT_FAILURE);
 }
-
-

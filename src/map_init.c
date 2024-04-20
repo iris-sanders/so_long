@@ -6,7 +6,7 @@
 /*   By: irsander <irsander@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 17:39:38 by irsander          #+#    #+#             */
-/*   Updated: 2024/04/19 19:49:04 by irsander         ###   ########.fr       */
+/*   Updated: 2024/04/20 17:14:02 by irsander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ void	update_info_with_map_data(t_info *map_info, char ch)
 		ft_error("unvalid map, allowed characters: 0,1,C,E,P");
 }
 
-void init_map_info(t_map *map_head, t_info *map_info)
+void	init_map_info(t_map *map_head, t_info *map_info)
 {
 	int		i;
 	t_map	*node;
-	
+
 	node = map_head;
 	*map_info = (t_info){0};
 	while (node)
@@ -49,4 +49,14 @@ void init_map_info(t_map *map_head, t_info *map_info)
 		}
 		node = node->next;
 	}
+}
+
+void	load_png(mlx_t *mlx, t_images *images)
+{
+	get_player_image(mlx, images);
+	get_background_image(mlx, images);
+	get_wall_image(mlx, images);
+	get_collectible_image(mlx, images);
+	get_exit_image(mlx, images);
+	resize_images(images);
 }

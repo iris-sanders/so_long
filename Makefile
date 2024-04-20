@@ -6,7 +6,7 @@
 #    By: irsander <irsander@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/12 13:26:39 by irsander          #+#    #+#              #
-#    Updated: 2024/04/19 20:01:15 by irsander         ###   ########.fr        #
+#    Updated: 2024/04/20 17:19:59 by irsander         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ NAME	=	so_long
 
 CC		=	cc
 
-CFLAGS	=	-Wall -Wextra -Werror -fsanitize=address -g
+CFLAGS	=	#-Wall -Wextra -Werror -fsanitize=address -g
 
 LIB_DIR	=	lib
 OBJ_DIR	=	src/obj

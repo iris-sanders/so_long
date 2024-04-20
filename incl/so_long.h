@@ -6,7 +6,7 @@
 /*   By: irsander <irsander@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 15:23:31 by irsander          #+#    #+#             */
-/*   Updated: 2024/04/19 19:49:59 by irsander         ###   ########.fr       */
+/*   Updated: 2024/04/20 17:14:10 by irsander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,13 +118,14 @@ char	**parse_map(char *file, t_info *map_info);
 //map_init.c
 void	update_info_with_map_data(t_info *map_info, char ch);
 void 	init_map_info(t_map *map_head, t_info *map_info);
+void	load_png(mlx_t *mlx, t_images *images);
 
 // rendering.c
-void	load_png(mlx_t *mlx, t_images *images);
 void	resize_images(t_images *images);
 void	calc_tilesize(t_info *map_info);
 void image_to_window(mlx_t *mlx, mlx_image_t *img, int x, int y);
-void render_map(char **array, t_info *map_info, mlx_t *mlx);
+void render_map(t_all *all_info);
+void	render_images(t_all *all, int tile_size, int y);
 
 // sprites.c
 void	get_player_image(mlx_t *mlx, t_images *images);

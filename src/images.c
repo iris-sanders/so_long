@@ -6,7 +6,7 @@
 /*   By: irsander <irsander@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 16:52:21 by irsander          #+#    #+#             */
-/*   Updated: 2024/04/19 20:02:01 by irsander         ###   ########.fr       */
+/*   Updated: 2024/04/19 20:27:45 by irsander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	get_player_image(mlx_t *mlx, t_images *images)
 		ft_error("failed to create player image");
 }
 
-void get_background_image(mlx_t *mlx, t_images *images)
+void	get_background_image(mlx_t *mlx, t_images *images)
 {
 	images->b_texture = mlx_load_png("textures/background.png");
 	if (!images->b_texture)

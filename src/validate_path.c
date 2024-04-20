@@ -6,7 +6,7 @@
 /*   By: irsander <irsander@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 19:31:15 by irsander          #+#    #+#             */
-/*   Updated: 2024/04/19 19:35:55 by irsander         ###   ########.fr       */
+/*   Updated: 2024/04/19 20:29:55 by irsander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ bool	floodfill(char **temp_array, int x, int y, t_info *map_info)
 	if (temp_array[y][x] == 'E')
 		exit_is_reachable++;
 	temp_array[y][x] = '1';
-	if (floodfill(temp_array, x +1, y, map_info) ||
-		floodfill(temp_array, x -1, y, map_info) ||
-		floodfill(temp_array, x, y +1, map_info) ||
+	if (floodfill(temp_array, x +1, y, map_info) || \
+		floodfill(temp_array, x -1, y, map_info) || \
+		floodfill(temp_array, x, y +1, map_info) || \
 		floodfill(temp_array, x, y -1, map_info))
 		return (true);
 	return (false);
@@ -36,9 +36,9 @@ bool	floodfill(char **temp_array, int x, int y, t_info *map_info)
 
 void	player_pos(char **temp_array, t_info *map_info)
 {
-	int x;
-	int y;
-	
+	int	x;
+	int	y;
+
 	y = 0;
 	while (y < map_info->y_length)
 	{
@@ -49,7 +49,7 @@ void	player_pos(char **temp_array, t_info *map_info)
 			{
 				map_info->player.pos_y = y;
 				map_info->player.pos_x = x;
-				break;
+				break ;
 			}
 			x++;
 		}
@@ -61,7 +61,7 @@ char	**copy_array(char **temp_array, t_info *map_info)
 {
 	char	**array;
 	int		y;
-	
+
 	y = map_info->y_length;
 	array = malloc((y + 1) * sizeof(char *));
 	if (!array)
@@ -75,7 +75,7 @@ char	**copy_array(char **temp_array, t_info *map_info)
 		{
 			free_2d_array(array);
 			ft_error("failed to allocate memory for string copy");
-			return NULL;
+			return (NULL);
 		}
 		y--;
 	}
@@ -110,11 +110,12 @@ char	**list_to_2d_array(t_map *map_head, t_info *map_info)
 char	**path_is_valid(t_map *map_head, t_info *map_info, char **array)
 {
 	char	**temp_array;
-	
+
 	temp_array = list_to_2d_array(map_head, map_info);
 	array = copy_array(temp_array, map_info);
 	player_pos(temp_array, map_info);
-	if (floodfill(temp_array, map_info->player.pos_x, map_info->player.pos_y, map_info) == false)
+	if (floodfill(temp_array, map_info->player.pos_x, \
+		map_info->player.pos_y, map_info) == false)
 		ft_error("No valid path");
 	free_2d_array(temp_array);
 	return (array);
