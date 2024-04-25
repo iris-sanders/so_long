@@ -6,7 +6,7 @@
 /*   By: irsander <irsander@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 15:23:31 by irsander          #+#    #+#             */
-/*   Updated: 2024/04/20 17:14:10 by irsander         ###   ########.fr       */
+/*   Updated: 2024/04/25 16:06:51 by irsander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,15 @@
 # define WIDTH 1000
 # define HEIGHT 1000
 
-typedef struct s_map {
+typedef struct s_map
+{
 	char			*line;
 	int				length;
 	struct s_map	*next;
-} t_map;
+}	t_map;
 
-typedef struct s_images {
+typedef struct s_images
+{
 	mlx_texture_t	*p_texture;
 	mlx_image_t		*p_image;
 	mlx_texture_t	*b_texture;
@@ -47,48 +49,51 @@ typedef struct s_images {
 	mlx_image_t		*c_image;
 	mlx_texture_t	*e_texture;
 	mlx_image_t		*e_image;
-	int				tile_size;
-	
-} t_images;
+	int				tile_size;	
+}	t_images;
 
-typedef struct s_player {
+typedef struct s_player
+{
 	int	pos_x;
 	int	pos_y;
-}t_player;
+}	t_player;
 
-typedef struct s_col {
-	int pos_x;
-	int pos_y;
-}t_col;
+typedef struct s_col
+{
+	int	pos_x;
+	int	pos_y;
+}	t_col;
 
-typedef struct s_info {
-	int	empty_spaces; //might not need
-	int	walls; //might not need
-	int collectibles; 
-	int exits; 
-	int players;
-	int newlines; //might not need
-	int endlines;
-	int	x_length;
-	int	y_length;
-	t_images im;
-	t_player player;
-	t_col col;
-} t_info;
+typedef struct s_info
+{
+	int			empty_spaces;
+	int			walls;
+	int			collectibles;
+	int			exits;
+	int			players;
+	int			newlines;
+	int			endlines;
+	int			x_length;
+	int			y_length;
+	t_images	im;
+	t_player	player;
+	t_col		col;
+}	t_info;
 
-typedef struct s_all {
-	t_info	*map_info;
-	mlx_t	*mlx;
-	char	**array;
+typedef struct s_all
+{
+	t_info		*map_info;
+	mlx_t		*mlx;
+	char		**array;
 	t_images	*imgs;
-} t_all;
+}	t_all;
 
 //game.c
-void 	collect_collectibles(t_all *all, int new_y, int new_x, int tilesize);
+void	collect_collectibles(t_all *all, int new_y, int new_x, int tilesize);
 void	update_exit_and_win(t_all *all, int new_y, int new_x);
 void	update_player_pos(t_all *all, int x_move, int y_move, int tilesize);
-void 	move_player(t_all *all, int x_move, int y_move);
-void 	ft_keyhook(mlx_key_data_t keydata, void* param);
+void	move_player(t_all *all, int x_move, int y_move);
+void	ft_keyhook(mlx_key_data_t keydata, void	*param);
 
 //get_next_line_utils.c
 void	*ft_free_gnl(char **s);
@@ -109,7 +114,7 @@ int		count_nodes(t_map *map_head);
 
 //map_init.c
 void	update_info_with_line_data(t_info *map_info, char ch);
-void 	init_map_info(t_map *map_head, t_info *map_info);
+void	init_map_info(t_map *map_head, t_info *map_info);
 
 //parse_map.c
 t_map	*open_map(char *file);
@@ -117,19 +122,19 @@ char	**parse_map(char *file, t_info *map_info);
 
 //map_init.c
 void	update_info_with_map_data(t_info *map_info, char ch);
-void 	init_map_info(t_map *map_head, t_info *map_info);
+void	init_map_info(t_map *map_head, t_info *map_info);
 void	load_png(mlx_t *mlx, t_images *images);
 
 // rendering.c
 void	resize_images(t_images *images);
 void	calc_tilesize(t_info *map_info);
-void image_to_window(mlx_t *mlx, mlx_image_t *img, int x, int y);
-void render_map(t_all *all_info);
+void	image_to_window(mlx_t *mlx, mlx_image_t *img, int x, int y);
+void	render_map(t_all *all_info);
 void	render_images(t_all *all, int tile_size, int y);
 
 // sprites.c
 void	get_player_image(mlx_t *mlx, t_images *images);
-void 	get_background_image(mlx_t *mlx, t_images *images);
+void	get_background_image(mlx_t *mlx, t_images *images);
 void	get_wall_image(mlx_t *mlx, t_images *images);
 void	get_collectible_image(mlx_t *mlx, t_images *images);
 void	get_exit_image(mlx_t *mlx, t_images *images);
@@ -138,8 +143,8 @@ void	get_exit_image(mlx_t *mlx, t_images *images);
 size_t	line_strlen(const char *s);
 void	free_2d_array(char **array);
 void	ft_error(char *msg);
-void 	cleanup(t_all *all_info, char **array);
-void 	ft_error_mlx(mlx_t *mlx);
+void	cleanup(t_all *all_info, char **array);
+void	ft_error_mlx(mlx_t *mlx);
 
 //validate_map.c
 int		map_is_rectangular(t_map *map_head);
